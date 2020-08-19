@@ -1,0 +1,12 @@
+{
+  "id": "{{cookiecutter.id}}",
+  "orchestrator": {
+	"docker_file": "dockerfiles/Dockerfile_main",
+	"scenario_file": "main.py",
+	"extra_files": [ "extra.dat" ],
+	"extra_dirs": [ "/c/Development/jupyterhub/mosaik-demo/docker/data" ],
+	"results": [ "demo.hdf5" ]
+	},
+  "sim_ids_up": [],
+  "sim_ids_down": []
+}

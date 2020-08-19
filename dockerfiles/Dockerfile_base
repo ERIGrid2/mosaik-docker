@@ -1,0 +1,13 @@
+FROM python:3.6
+
+RUN apt-get update
+
+### mosaik orchestrator base
+RUN pip install --upgrade pip
+RUN pip install mosaik-api==2.4.1
+RUN pip install mosaik==2.5.3      
+#RUN pip install mosaik-docker==0.1
+
+WORKDIR /mosaik
+
+ENV PYTHONDONTWRITEBYTECODE=1
