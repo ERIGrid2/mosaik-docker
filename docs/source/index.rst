@@ -10,7 +10,9 @@ This package provides:
 
 * an extension to the mosaik framework that allows to start and run simulators as separate Docker containers
 * a command line interface (CLI) that eases the deployment of dockerized mosaik simulations
- 
+
+The mosaik-docker package can also be used with `JupyterLab <https://jupyter.org/>`_, please visit the `mosaik-docker JupyterLab extension <https://mosaik-docker.readthedocs.io/projects/jupyter/en/latest/>`_ for more information on this subject.
+
 Installation
 ------------
 

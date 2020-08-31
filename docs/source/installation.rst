@@ -7,3 +7,8 @@ Installation
 ============
 
 ...
+
+Troubleshoot
+============
+
+...
