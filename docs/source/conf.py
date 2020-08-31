@@ -27,6 +27,10 @@ release = '0.1'
 
 # -- General configuration ---------------------------------------------------
 
+# The document name of the “master” document, that is, the document that
+# contains the root toctree directive.
+master_doc = 'index'
+
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
@@ -40,7 +44,6 @@ templates_path = ['_templates']
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
-
 
 # -- Options for HTML output -------------------------------------------------
 
