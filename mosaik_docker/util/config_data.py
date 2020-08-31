@@ -73,3 +73,11 @@ class ConfigData:
         Absolute path to configuration file.
         '''
         return self.__sim_setup_file_path
+
+
+    @property
+    def data( self ):
+        '''
+        Configuration data as dict.
+        '''
+        return self.__config_data
