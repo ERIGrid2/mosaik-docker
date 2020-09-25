@@ -1,16 +1,20 @@
 from setuptools import setup, find_packages
 
 
+# Read long description from file (reStructuredText syntax). Will be parsed and displayed as HTML online.
+with open( 'description.rst' ) as description_file:
+  _long_description = description_file.read()
+
 setup(
     name = 'mosaik-docker',
     maintainer = 'ERIGrid 2.0 development team',
     maintainer_email = 'edmund.widl@ait.ac.at',
-    url = 'https://github.com/ERIGrid/mosaik-docker',
-    version = '0.1',
+    url = 'https://mosaik-docker.readthedocs.io',
+    version = '0.1.1',
     platforms = [ 'any' ],
     packages = find_packages(),
     package_data = {
-        'mosaik_docker': [ 
+        'mosaik_docker': [
             'sim_setup_template/cookiecutter.json',
             'sim_setup_template/{{cookiecutter.directory_name}}/mosaik-docker.json',
             'sim_setup_template/{{cookiecutter.directory_name}}/dockerfiles/*',
@@ -36,9 +40,9 @@ setup(
             'delete_sim_setup = mosaik_docker.cli.delete_sim_setup:main',
         ]
     },
-    description = 'Add-on package for the Docker-based execution of the mosaik co-simulation framework.',
-    long_description = 'README.md',
-    license = 'BSD 2-Clause License',
+    description = 'This package eases the deployment of the mosaik co-simulation framework with Docker.',
+    long_description = _long_description,
+    license = 'BSD 3-Clause License',
     keywords = [
         'mosaik',
         'Docker',
