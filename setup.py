@@ -10,13 +10,14 @@ setup(
     maintainer = 'ERIGrid 2.0 development team',
     maintainer_email = 'edmund.widl@ait.ac.at',
     url = 'https://mosaik-docker.readthedocs.io',
-    version = '0.1.1',
+    version = '0.1.2',
     platforms = [ 'any' ],
     packages = find_packages(),
     package_data = {
         'mosaik_docker': [
             'sim_setup_template/cookiecutter.json',
             'sim_setup_template/{{cookiecutter.directory_name}}/mosaik-docker.json',
+            'sim_setup_template/{{cookiecutter.directory_name}}/README.md',
             'sim_setup_template/{{cookiecutter.directory_name}}/dockerfiles/*',
         ],
     },
