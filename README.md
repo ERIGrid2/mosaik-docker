@@ -1,5 +1,7 @@
 # mosaik-docker
 
+[![Latest PyPI version](https://img.shields.io/pypi/v/mosaik-docker)](https://pypi.org/project/mosaik-docker)
+
 This package eases the deployment of the [mosaik co-simulation framework](https://mosaik.offis.de/) with Docker.
 
 This package provides:
