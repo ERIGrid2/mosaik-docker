@@ -3,7 +3,7 @@ from ..util.config_data import ConfigData
 
 def get_sim_ids( setup_dir ):
     '''
-    Get IDs all running (status 'UP') and finished (status 'DOWN') simulations of a simulation setup.
+    Get IDs of all running (status 'UP') and finished (status 'DOWN') simulations of a simulation setup.
 
     :param setup_dir: path to simulation setup (string)
     :return: return dict with simulation IDs in the following format:
@@ -30,7 +30,7 @@ def main():
 
     # Command line parser.
     parser = argparse.ArgumentParser(
-        description = 'Get IDs all running (status \'UP\') and finished (status \'DOWN\') simulations of a simulation setup.'
+        description = 'Get IDs all of running (status \'UP\') and finished (status \'DOWN\') simulations of a simulation setup.'
     )
 
     parser.add_argument(
