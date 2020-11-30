@@ -14,6 +14,7 @@ def check_sim_setup( setup_dir ):
             'status': string # detailed status message
         }
     '''
+    setup_dir = pathlib.Path( setup_dir ).resolve( strict = True )
 
     # Retrieve simulation setup configuration.
     config_data = ConfigData( setup_dir )
