@@ -32,6 +32,9 @@ class ConfigData:
             except Exception as err:
                 raise Exception( 'Invalid JSON format: {}\n{}'.format( self.__sim_setup_file_path, str( err ) ) )
 
+        # Sanitize configuration: remove empty strings from lists.
+        self.__recursive_del_empty_str_from_lists( self.__config_data )
+
 
     def __setitem__( self, index, value ):
         '''
@@ -81,3 +84,15 @@ class ConfigData:
         Configuration data as dict.
         '''
         return self.__config_data
+
+
+    def __recursive_del_empty_str_from_lists( self, obj ):
+        '''
+        Helper function: recursively remove empty strings from lists in dicts.
+        '''
+        for k,v in obj.items():
+            if isinstance( v, list ):
+                if '' in v:
+                    v.remove( '' )
+            elif isinstance( v, dict ):
+                self.__recursive_del_empty_str_from_lists( v )
