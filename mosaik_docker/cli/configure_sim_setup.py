@@ -101,7 +101,8 @@ def main():
     )
 
     parser.add_argument(
-        '--extra-file', 
+        '--extra-file',
+        default = [],
         action = 'append',
         metavar = 'EXTRA_FILE',
         help = 'additional file to be added to the orchestrator Docker image'
@@ -109,6 +110,7 @@ def main():
 
     parser.add_argument(
         '--extra-dir', 
+        default = [],
         action = 'append',
         metavar = 'EXTRA_DIR',
         help = 'additional directory to be added to the orchestrator Docker image'
