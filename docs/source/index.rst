@@ -1,5 +1,6 @@
+*******************************************
 Welcome to the mosaik-docker documentation!
-===========================================
+*******************************************
 
 .. meta::
    :description lang=en: Deploy the mosaik co-simulation framework with Docker.
@@ -15,7 +16,7 @@ Examples of *mosaik-docker simulation setups* can be found `here <https://github
 The *mosaik-docker* package can also be used with `JupyterLab <https://jupyter.org/>`_, please visit the `mosaik-docker JupyterLab extension <https://mosaik-docker.readthedocs.io/projects/jupyter/en/latest/>`_ for more information on this subject.
 
 Usage
------
+=====
 
 Find information about how to use the *mosaik-docker* package :doc:`here <usage>`.
 
@@ -27,7 +28,7 @@ Find information about how to use the *mosaik-docker* package :doc:`here <usage>
    /usage
 
 Installation
-------------
+============
 
 Find information about the requirements and the installation of the *mosaik-docker* package :doc:`here <installation>`.
 
@@ -38,8 +39,8 @@ Find information about the requirements and the installation of the *mosaik-dock
 
    /installation
 
-Command-line interface reference
---------------------------------
+Command line interface reference
+================================
 
 Find detailed information about the *mosaik-docker* package commands :doc:`here <cli-reference>`.
 
@@ -49,3 +50,16 @@ Find detailed information about the *mosaik-docker* package commands :doc:`here 
    :caption: CLI Reference
 
    /cli-reference
+
+
+Python API reference
+====================
+
+Find detailed information about the *mosaik-docker* Python API :doc:`here <api-reference>`.
+
+.. toctree::
+   :maxdepth: 2
+   :hidden:
+   :caption: Python API Reference
+
+   /api-reference

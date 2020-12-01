@@ -1,3 +1,7 @@
+***************************
+Using package mosaik-docker
+***************************
+
 Overview
 ========
 
@@ -131,7 +135,7 @@ finished:
 Retrieve simulation results
 ===========================
 
-After a simulations has successfully finished, you can use command ``get_sim_results`` to retrieve the corresponding results (see `here <https://mosaik-docker.readthedocs.io/en/latest/cli-reference.html#get-sim-results>`_ for details):
+After a simulation has successfully finished, you can use command ``get_sim_results`` to retrieve the corresponding results (see `here <https://mosaik-docker.readthedocs.io/en/latest/cli-reference.html#get-sim-results>`_ for details):
 
 >>> get_sim_results --id 766540
 Retrieved results for simulation(s) with ID = 766540

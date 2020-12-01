@@ -1,3 +1,9 @@
+********************************
+Command line interface reference
+********************************
+
+Package *mosaik-docker* provides the following commands via the console.
+
 Commands for handling simulation setups
 =======================================
 
