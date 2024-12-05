@@ -4,9 +4,7 @@ RUN apt-get update
 
 ### mosaik orchestrator base
 RUN pip install --upgrade pip
-RUN pip install mosaik-api==2.4.1
-RUN pip install mosaik==2.5.3      
-#RUN pip install mosaik-docker==0.1
+RUN pip install mosaik~=2.6.0 mosaik-api~=2.4.2 simpy~=3.0.13 simpy.io~=0.2.3
 
 WORKDIR /mosaik
 

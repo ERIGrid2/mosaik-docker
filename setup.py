@@ -10,7 +10,7 @@ setup(
     maintainer = 'ERIGrid 2.0 development team',
     maintainer_email = 'edmund.widl@ait.ac.at',
     url = 'https://mosaik-docker.readthedocs.io',
-    version = '0.1.4',
+    version = '0.1.5',
     platforms = [ 'any' ],
     packages = find_packages(),
     package_data = {
@@ -23,7 +23,7 @@ setup(
     },
     install_requires = [
         'cookiecutter',
-        'mosaik'
+        'mosaik~=2.6.0'
     ],
     entry_points={
         'console_scripts': [
