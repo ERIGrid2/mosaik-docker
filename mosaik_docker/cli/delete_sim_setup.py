@@ -3,16 +3,17 @@ import shutil
 
 from .cancel_sim import cancel_sim
 from .clear_sim import clear_sim
-from .._config import ORCH_IMAGE_NAME_TEMPLATE
+from .._config import ORCH_IMAGE_NAME_TEMPLATE, DOCKER_HOST_DEFAULT
 from ..util.execute import execute
 from ..util.config_data import ConfigData
 
 
-def delete_sim_setup( setup_dir ):
+def delete_sim_setup( setup_dir, docker_host = DOCKER_HOST_DEFAULT ):
     '''
     Delete a simulation setup, including all associated Docker images and containers.
 
     :param setup_dir: path to simulation setup (string)
+    :param url_docker_host: URL to the daemon socket to connect to when running docker
     :return: return dict with status of build process:
         {
             'valid': flag indicating if deletion succeded (boolean)
@@ -25,8 +26,8 @@ def delete_sim_setup( setup_dir ):
         cancel_sim( setup_dir, 'all' )
 
     except Exception as err:
-        return dict( 
-            valid = False, 
+        return dict(
+            valid = False,
             status = 'cancelling running simulations failed:\n{}'.format( err )
         )
 
@@ -35,8 +36,8 @@ def delete_sim_setup( setup_dir ):
         clear_sim( setup_dir, 'all' )
 
     except Exception as err:
-        return dict( 
-            valid = False, 
+        return dict(
+            valid = False,
             status = 'clearing finished simulations failed:\n{}'.format( err )
         )
 
@@ -48,31 +49,34 @@ def delete_sim_setup( setup_dir ):
 
         # Specify name of mosaik orchestrator image.
         orch_image_name = ORCH_IMAGE_NAME_TEMPLATE.format( sim_setup_id.lower() )
-    
-        execute( [
-            'docker', 'image', 'rm', # Remove Docker image.
-            orch_image_name # Specify image name.
-        ] )
+
+        execute(
+            [
+                'docker', 'image', 'rm', # Remove Docker image.
+                orch_image_name # Specify image name.
+            ],
+            env = dict( DOCKER_HOST = docker_host )
+        )
 
     except Exception as err:
-        return dict( 
-            valid = False, 
+        return dict(
+            valid = False,
             status = 'remove orchestrator image failed:\n{}'.format( err )
         )
 
     try:
         setup_dir_path = pathlib.Path( setup_dir ).resolve()
         shutil.rmtree( setup_dir_path )
-        
+
     except Exception as err:
-        return dict( 
-            valid = False, 
+        return dict(
+            valid = False,
             status = 'deleting simulation setup failed:\n{}'.format( err )
         )
 
-    return dict( 
-        valid = True, 
-        status = 'deletion of simulation setup succeeded: {}'.format( setup_dir_path ) 
+    return dict(
+        valid = True,
+        status = 'deletion of simulation setup succeeded: {}'.format( setup_dir_path )
     )
 
 

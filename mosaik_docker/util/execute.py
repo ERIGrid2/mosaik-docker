@@ -1,7 +1,7 @@
 import subprocess
 
 
-def execute( cmd ):
+def execute( cmd, env = None ):
     '''
     Invoke and execute a subprocess.
 
@@ -10,6 +10,7 @@ def execute( cmd ):
     '''
     p = subprocess.Popen(
         cmd,
+        env = env,
         #stdout = subprocess.PIPE,
         stderr = subprocess.PIPE
     )
@@ -21,7 +22,7 @@ def execute( cmd ):
         raise Exception( p.stderr.read().decode( 'utf-8' )[:-1] )
 
 
-def execute_and_capture_output( cmd ):
+def execute_and_capture_output( cmd, env = None ):
     '''
     Invoke and execute a subprocess.
     Output from the subprocess to stdout is captured and returned as string.
@@ -31,6 +32,7 @@ def execute_and_capture_output( cmd ):
     '''
     p = subprocess.Popen(
         cmd,
+        env = env,
         stdout = subprocess.PIPE,
         stderr = subprocess.PIPE
     )
@@ -46,7 +48,7 @@ def execute_and_capture_output( cmd ):
 
 
 
-def execute_and_stream_output( cmd, out_stream ):
+def execute_and_stream_output( cmd, out_stream, env = None ):
     '''
     Invoke and execute a subprocess.
     Output from the process to stdout is sent line by line to the specified output stream.
@@ -57,6 +59,7 @@ def execute_and_stream_output( cmd, out_stream ):
     '''
     p = subprocess.Popen(
         cmd,
+        env = env,
         stdout = subprocess.PIPE,
         stderr = subprocess.PIPE
     )

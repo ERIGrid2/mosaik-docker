@@ -5,3 +5,4 @@ ORCH_CONTEXT_DIR_NAME = '.orch_context'
 ORCH_CONTEXT_EXTRA_DIR_NAME = 'extra'
 
 DOCKER_STOP_WAIT_TIME = 2
+DOCKER_HOST_DEFAULT = 'unix:///var/run/docker.sock'

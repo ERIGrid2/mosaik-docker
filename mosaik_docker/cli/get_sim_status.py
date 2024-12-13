@@ -1,14 +1,16 @@
+from .._config import DOCKER_HOST_DEFAULT
 from ..util.config_data import ConfigData
 from ..util.execute import execute_and_capture_output
 from ..util.flatten_list import flatten_list
 
 
-def get_sim_status( setup_dir ):
+def get_sim_status( setup_dir, docker_host = DOCKER_HOST_DEFAULT ):
     '''
     Get status of all simulations of a mosaik-docker setup.
     Updates the simulation setup information about which containers are running (status UP) or finished (status DOWN) if it is not up to date.
 
     :param setup_dir: path to simulation setup (string)
+    :param url_docker_host: URL to the daemon socket to connect to when running docker.
     :return: return dict with status information for all simulations of a mosaik-docker simulation setup in the following format:
         {
             'up': { string: string } # running simulation IDs and status
@@ -22,7 +24,7 @@ def get_sim_status( setup_dir ):
     sim_ids_down = config_data['sim_ids_down']
 
     # Check if any simulation with status 'running' has already finished.
-    sim_ids_stopped = _diff_status( sim_ids_up, 'running' )
+    sim_ids_stopped = _diff_status( sim_ids_up, 'running', docker_host )
     if 0 != len( sim_ids_stopped ):
         # Update sim setup config accordingly.
         for id in sim_ids_stopped:
@@ -42,7 +44,7 @@ def get_sim_status( setup_dir ):
         )
 
 
-def _diff_status( ids, status ):
+def _diff_status( ids, status, docker_host ):
     '''
     Check if Docker containers are in a specified status.
     Returns list of Docker container names that are not in the specified status.
@@ -58,14 +60,17 @@ def _diff_status( ids, status ):
     status_filter = [ '--filter', 'status={}'.format( status ) ]
 
     # Retrieve container names (as string).
-    out = execute_and_capture_output( [
-        'docker', 'ps', # List containers.
-        '--no-trunc', # Do not truncate output.
-        '--all', # Show all containers (default shows just running).
-        *flatten_list( id_filter ), # Filter output based on conditions provided.
-        *status_filter, # Filter output based on conditions provided.
-        '--format', '{{.Names}}' # Only output container names.
-    ] )
+    out = execute_and_capture_output(
+        [
+            'docker', 'ps', # List containers.
+            '--no-trunc', # Do not truncate output.
+            '--all', # Show all containers (default shows just running).
+            *flatten_list( id_filter ), # Filter output based on conditions provided.
+            *status_filter, # Filter output based on conditions provided.
+            '--format', '{{.Names}}' # Only output container names.
+        ],
+        env = dict( DOCKER_HOST = docker_host )
+    )
 
     # Parse string to list.
     confirmed_status = out.split( '\n' )

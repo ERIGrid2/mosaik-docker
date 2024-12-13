@@ -1,18 +1,19 @@
 import pathlib
 import shutil
 
-from .._config import ORCH_CONTEXT_DIR_NAME, ORCH_CONTEXT_EXTRA_DIR_NAME, ORCH_IMAGE_NAME_TEMPLATE
+from .._config import ORCH_CONTEXT_DIR_NAME, ORCH_CONTEXT_EXTRA_DIR_NAME, ORCH_IMAGE_NAME_TEMPLATE, DOCKER_HOST_DEFAULT
 from ..util.execute import execute_and_stream_output
 from ..util.config_data import ConfigData
 
 
-def build_sim_setup( setup_dir, out_stream = print ):
+def build_sim_setup( setup_dir, out_stream = print, docker_host = DOCKER_HOST_DEFAULT ):
     '''
     Build simulation setup as preparation for running the simulation.
     This includes building the Docker image of the mosaik orchestrator.
 
     :param setup_dir: path to simulation setup (string)
     :param out_stream: output from the build process to stderr will be piped to this stream (callable)
+    :param url_docker_host: URL to the daemon socket to connect to when running docker
     :return: return dict with status of build process:
         {
             'valid': flag indicating if build succeded (boolean)
@@ -71,18 +72,18 @@ def build_sim_setup( setup_dir, out_stream = print ):
             '-f', docker_file_path, # Specify the Dockerfile.
             orch_context_dir # Specify the build context.
         ]
-        
-        execute_and_stream_output( cmd, out_stream )
+
+        execute_and_stream_output( cmd, out_stream, env = dict( DOCKER_HOST = docker_host ) )
 
     except Exception as err:
-        return dict( 
-            valid = False, 
+        return dict(
+            valid = False,
             status = 'building simulation setup failed:\n{}\nrun "check_sim_setup" for details'.format( err )
         )
 
-    return dict( 
-        valid = True, 
-        status = 'building simulation setup succeeded: {}'.format( config_data.path.parent ) 
+    return dict(
+        valid = True,
+        status = 'building simulation setup succeeded: {}'.format( config_data.path.parent )
     )
 
 

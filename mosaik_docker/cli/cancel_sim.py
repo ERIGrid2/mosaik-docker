@@ -1,14 +1,15 @@
-from .._config import DOCKER_STOP_WAIT_TIME
+from .._config import DOCKER_STOP_WAIT_TIME, DOCKER_HOST_DEFAULT
 from ..util.config_data import ConfigData
 from ..util.execute import execute
 
 
-def cancel_sim( setup_dir, id ):
+def cancel_sim( setup_dir, id, docker_host = DOCKER_HOST_DEFAULT ):
     '''
     Cancel a simulation (stop simulation container).
 
     :param setup_dir: path to simulation setup (string)
     :param id: either 'all' or ID of running simulation container (string)
+    :param url_docker_host: URL to the daemon socket to connect to when running docker
     :return: on success, return ID of cancelled simulation (int)
     '''
 
@@ -33,11 +34,14 @@ def cancel_sim( setup_dir, id ):
             raise RuntimeError( 'There is already a finished simulation (status \'DOWN\') with ID \'{}\''.format( id ) )
 
     if 0 != len( stop_ids ):
-        execute( [
-            'docker', 'stop', # Stop Docker container.
-            '--time' , str( DOCKER_STOP_WAIT_TIME ), # Seconds to wait for stop before killing it.
-            *stop_ids
-        ] )
+        execute(
+            [
+                'docker', 'stop', # Stop Docker container.
+                '--time' , str( DOCKER_STOP_WAIT_TIME ), # Seconds to wait for stop before killing it.
+                *stop_ids
+            ],
+            env = dict( DOCKER_HOST = docker_host )
+        )
 
     # Update sim setup config.
     if 'all' == id.lower():

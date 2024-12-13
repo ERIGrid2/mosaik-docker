@@ -1,13 +1,15 @@
+from .._config import DOCKER_HOST_DEFAULT
 from ..util.config_data import ConfigData
 from ..util.execute import execute
 
 
-def clear_sim( setup_dir, id ):
+def clear_sim( setup_dir, id, docker_host = DOCKER_HOST_DEFAULT ):
     '''
     Delete containers of finished simulations.
 
     :param setup_dir: path to simulation setup (string)
     :param id: either 'all' or ID of simulation container to be cleared (string)
+    :param url_docker_host: URL to the daemon socket to connect to when running docker
     :return: on success, return list of cleared simulation IDs (list of string)
     '''
 
@@ -26,11 +28,14 @@ def clear_sim( setup_dir, id ):
             raise RuntimeError( 'No finished simulation (status \'DOWN\') with ID \'{}\''.format( id ) )
 
     if 0 != len( rm_ids ):
-        execute( [
-            'docker', 'rm', # Remove container.
-            '--volumes', # Remove anonymous volumes associated with the container.
-            *rm_ids # Simulation ID (Docker container name).
-        ] )
+        execute(
+            [
+                'docker', 'rm', # Remove container.
+                '--volumes', # Remove anonymous volumes associated with the container.
+                *rm_ids # Simulation ID (Docker container name).
+            ],
+            env = dict( DOCKER_HOST = docker_host )
+        )
 
     if 'all' == id.lower():
         sim_ids_down.clear()
@@ -65,7 +70,7 @@ def main():
     group = parser.add_mutually_exclusive_group( required = True )
 
     group.add_argument(
-        '--id', 
+        '--id',
         action = 'store',
         metavar = 'ID',
         help = 'simulation ID (Docker container name)'

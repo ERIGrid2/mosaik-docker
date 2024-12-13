@@ -1,15 +1,16 @@
-from .._config import ORCH_IMAGE_NAME_TEMPLATE
+from .._config import ORCH_IMAGE_NAME_TEMPLATE, DOCKER_HOST_DEFAULT
 from ..util.config_data import ConfigData
 from ..util.create_unique_id import create_unique_id
 from ..util.execute import execute
 
 
-def start_sim( setup_dir, id = None ):
+def start_sim( setup_dir, id = None, docker_host = DOCKER_HOST_DEFAULT ):
     '''
     Start a new simulation.
 
     :param setup_dir: path to simulation setup (string)
     :param id: ID of new simulation (string, default: None)
+    :param url_docker_host: URL to the daemon socket to connect to when running docker
     :return: on success, return new simulation ID (int)
     '''
 
@@ -35,14 +36,17 @@ def start_sim( setup_dir, id = None ):
     # Define Docker image name.
     docker_image_name = ORCH_IMAGE_NAME_TEMPLATE.format( sim_setup_id.lower() )
 
-    execute( [
-        'docker', 'run', # Docker run command.
-        '--detach', # Run container in background.
-        #'--rm', # '-it', # Only for debugging.
-        '--name', id, # Specify container name as simulation id.
-        '--env', 'SCENARIO_FILE={}'.format( scenario_file ), # Specify scenario file.
-        docker_image_name # Specify the Docker image.
-    ] )
+    execute(
+        [
+            'docker', 'run', # Docker run command.
+            '--detach', # Run container in background.
+            #'--rm', # '-it', # Only for debugging.
+            '--name', id, # Specify container name as simulation id.
+            '--env', 'SCENARIO_FILE={}'.format( scenario_file ), # Specify scenario file.
+            docker_image_name # Specify the Docker image.
+        ],
+        env = dict( DOCKER_HOST = docker_host )
+    )
 
     # Update sim setup config.
     sim_ids_up.append( id )
