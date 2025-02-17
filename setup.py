@@ -23,7 +23,8 @@ setup(
     },
     install_requires = [
         'cookiecutter',
-        'mosaik~=2.6.0'
+        'mosaik~=2.6.0',
+        'strenum',
     ],
     entry_points={
         'console_scripts': [
