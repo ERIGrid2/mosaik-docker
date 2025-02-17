@@ -2,7 +2,7 @@ import pathlib
 import shutil
 
 from .._config import ORCH_CONTEXT_DIR_NAME, ORCH_CONTEXT_EXTRA_DIR_NAME, ORCH_IMAGE_NAME_TEMPLATE, DOCKER_HOST_DEFAULT
-from ..util.execute import execute_and_stream_output
+from ..util.execute import execute_and_stream_output, ProcessOutStreamDef
 from ..util.config_data import ConfigData
 
 
@@ -66,6 +66,7 @@ def build_sim_setup( setup_dir, out_stream = print, docker_host = DOCKER_HOST_DE
 
         cmd = [
             'docker', 'build', # Docker build command.
+            '--progress', 'plain', # Set type of progress output to show container output.
             '-t', docker_image_name, # Specify image name.
             '--build-arg', 'SCENARIO_FILE={}'.format( scenario_file ), # Specify scenario file.
             '--build-arg', 'EXTRA={}'.format( ORCH_CONTEXT_EXTRA_DIR_NAME ), # Specify directory with extra files and directories.
@@ -73,7 +74,7 @@ def build_sim_setup( setup_dir, out_stream = print, docker_host = DOCKER_HOST_DE
             orch_context_dir # Specify the build context.
         ]
 
-        execute_and_stream_output( cmd, out_stream, env = dict( DOCKER_HOST = docker_host ) )
+        execute_and_stream_output( cmd, out_stream, env = dict( DOCKER_HOST = docker_host ), out_stream_def = ProcessOutStreamDef.STDERR )
 
     except Exception as err:
         return dict(
